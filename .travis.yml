@@ -17,21 +17,21 @@ script:
 - docker --version # print the version for logging
 
 - docker build -t udagram-api-feed ./udagram-api-feed
-- docker tag udagram-api-feed ukemzyskywalker/udagram-api-feed
+- docker tag udagram-api-feed ukemzyskywalker/udagram-api-feed:v1
 
 - docker build -t udagram-api-user ./udagram-api-user
-- docker tag udagram-api-user ukemzyskywalker/udagram-api-user
+- docker tag udagram-api-user ukemzyskywalker/udagram-api-user:v1
 
 - docker build -t udagram-frontend ./udagram-frontend
-- docker tag udagram-frontend ukemzyskywalker/udagram-frontend
+- docker tag udagram-frontend ukemzyskywalker/udagram-frontend:v1
 
 - docker build -t udagram-reverseproxy ./udagram-reverseproxy
-- docker tag udagram-reverseproxy ukemzyskywalker/udagram-reverseproxy
+- docker tag udagram-reverseproxy ukemzyskywalker/udagram-reverseproxy:v1
 
 # Tasks to perform after the process is successful. Formatting the Docker username and password as below enables you to programmatically log in without having the password exposed in logs.
 after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker push ukemzyskywalker/udagram-api-feed
-  - docker push ukemzyskywalker/udagram-api-user
-  - docker push ukemzyskywalker/udagram-frontend
-  - docker push ukemzyskywalker/udagram-reverseproxy
+  - docker push ukemzyskywalker/udagram-api-feed:v1
+  - docker push ukemzyskywalker/udagram-api-user:v1
+  - docker push ukemzyskywalker/udagram-frontend:v1
+  - docker push ukemzyskywalker/udagram-reverseproxy:v1
