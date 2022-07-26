@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-user
+  labels:
+    app: backend-user
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend-user
+  template:
+    metadata:
+      labels:
+        app: backend-user
+    spec:
+      containers:
+        - name: backend-user
+          image: ukemzyskywalker/udagram-api-user
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 250m
+          env:
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: POSTGRES_HOST
+            - name: AWS_REGION
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: AWS_REGION
+            - name: AWS_PROFILE
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: AWS_PROFILE
+            - name: AWS_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: AWS_BUCKET
+            - name: URL
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: URL
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: JWT_SECRET
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: backend-user
+  name: backend-user
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/backend-user
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: backend-user
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
