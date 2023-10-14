@@ -3,8 +3,10 @@
 ### Prerequisites
     1. Install Git: https://git-scm.com/downloads
     2. Install NodeJS v12.14 or greater up to v14.15
-    3. AWS CLI v2: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
-    4. Configure AWS user (with Admin permissions) to terminal
+    3. install Docker https://docs.docker.com/desktop/#download-and-install
+    4. AWS CLI v2: https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+    5. Install Kubectl: https://kubernetes.io/docs/tasks/tools/#kubectl
+    6. Configure AWS user (with Admin permissions) to terminal - aws configure
 
 
  To run this project, you are expected to have:
